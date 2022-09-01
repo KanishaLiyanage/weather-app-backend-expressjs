@@ -4,9 +4,8 @@ const express = require("express");
 const User = require("./models/user");
 const userRouter = require("./routers/user");
 
-const port = process.env.PORT || 3000;
-
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(userRouter);
