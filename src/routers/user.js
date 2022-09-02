@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
+const https = require("https");
 
 const router = new express.Router();
 
@@ -107,6 +108,33 @@ router.delete('/users/me', auth, async (req, res) => {
         await req.user.remove();
         res.status(200).send(req.user);
     } catch (e) {
+        res.status(500).send(e);
+    }
+
+});
+
+router.get('/user/weatherdata', async(req, res) => {
+
+    const url = "https://api.openweathermap.org/data/2.5/weather?lat=6.9724&lon=79.9475&appid=5f39ac098bfb1d20edb29bbc65746da8";
+
+    https.get(url, function(response){
+        console.log(response.statusCode);
+
+        response.on("data", function(data){
+
+            const weatherData = JSON.parse(data);
+            const temp = weatherData.main.temp;
+            const desc = weatherData.weather[0].description;
+
+        });
+
+        res.send();
+
+    });
+
+    try{
+
+    }catch(e){
         res.status(500).send(e);
     }
 
