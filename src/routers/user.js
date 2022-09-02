@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
@@ -113,9 +114,10 @@ router.delete('/users/me', auth, async (req, res) => {
 
 });
 
-router.get('/user/weatherdata', async(req, res) => {
+router.get('/user/weatherdata', (req, res) => {
 
-    const url = "https://api.openweathermap.org/data/2.5/weather?lat=6.9724&lon=79.9475&appid=5f39ac098bfb1d20edb29bbc65746da8";
+    key = process.env.API_KEY;
+    const url = "https://api.openweathermap.org/data/2.5/weather?lat=6.9724&lon=79.9475&appid="+key;
 
     https.get(url, function(response){
         console.log(response.statusCode);
